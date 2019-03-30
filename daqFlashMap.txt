@@ -1,0 +1,13 @@
+0x10 - 8 bit, sensor enable bits, as described below:
+	0 - BT
+	1 - SP
+	2 - A1
+	3 - A2
+	4 - A3
+	5 - A4
+	6 - A5
+	7 - A6
+
+	1 for on, 0 for off. Disabling all sensor readings in a CAN message disables the message
+
+0x20 - 16 bit, interval between message transmissions in milliseconds
