@@ -1,6 +1,7 @@
 #include <can.h>
 #include "daq.h"
 #include "adc.h"
+#include <util/delay.h>
 
 void updateReadings( Sensor* sensors )
 {
@@ -15,10 +16,10 @@ void updateReadings( Sensor* sensors )
 
 void constructCANMessage( CANMessage* message, Sensor* sensors, uint8_t start )
 {
-	for( uint8_t i = start; i < start + 4 && i < NUM_SENSORS; ++i )
+	for( uint8_t i = start; (i < start + 4) && (i < NUM_SENSORS); ++i )
 	{
-		message->data[i*2] = (sensors[i].value & 0xFF00) >> 8;
-		message->data[i*2+1] = (sensors[i].value & 0x00FF);
+		message->data[(i-start)*2] = (sensors[i].value & 0xFF00) >> 8;
+		message->data[(i-start)*2+1] = (sensors[i].value & 0x00FF);
 	}
 }
 
@@ -27,13 +28,17 @@ void transmitReadings( Sensor* sensors )
 	if( sensors[BT_CH].enabled || sensors[SP_CH].enabled || sensors[A1_CH].enabled || sensors[A2_CH].enabled )
 	{
 		CANMessage message1;
+		message1.id = 0x10;
+		message1.length = 8;
 		constructCANMessage( &message1, sensors, 0 );
 		sendCAN( &message1 );
 	}
-
+	//_delay_ms(5);
 	if( sensors[A3_CH].enabled || sensors[A4_CH].enabled || sensors[A5_CH].enabled || sensors[A6_CH].enabled )
 	{
 		CANMessage message2;
+		message2.id = 0x20;
+		message2.length = 8;
 		constructCANMessage( &message2, sensors, 4 );
 		sendCAN( &message2 );
 	}

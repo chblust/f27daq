@@ -2,7 +2,7 @@
 
 void defaultSensor( Sensor* sensor )
 {
-	sensor->enabled = 0;
+	sensor->enabled = 1;
 	sensor->value = 0;
 	sensor->channel = 0;
 }
