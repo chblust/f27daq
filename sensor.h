@@ -5,7 +5,7 @@
 
 typedef struct 
 {
-	uint16_t value : 10;
+	uint16_t value;
 	uint16_t channel: 3;
 	uint16_t enabled : 1;
 } Sensor;

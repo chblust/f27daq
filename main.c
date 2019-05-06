@@ -7,6 +7,7 @@
 #include "adc.h"
 #include "heartbeat.h"
 #include "daq.h"
+#include <port.h>
 
 /**
  * Write data to an eeprom address, all specified by the given CAN message.
@@ -49,7 +50,7 @@ int main()
 
 	initTimer();
 	// Currently defaulting to 10ms intervals
-	setTimer( 10 );//getMessageInterval() );
+	setTimer( 500 );//getMessageInterval() );
 
 	Sensor sensors[NUM_SENSORS];
 	for( uint8_t i = 0; i < NUM_SENSORS; ++i )
@@ -91,6 +92,7 @@ int main()
 		}
 	}	
 }
+
 
 
 
